@@ -3,8 +3,8 @@
 //id 패스워드 말고 캐릭터로
 // create , status , item
 
-import { users } from './account.js';
-import express from 'express';
+import { users } from '../routes/account.js';
+import express, { response } from 'express';
 
 const router = express.Router();
 
@@ -15,9 +15,9 @@ router.post('/create', (request, response) => {
   // users 에서 id와 password가 일치하는 유저 찾기 ㅜㅜ
   // 찾은 유저 정보안에 charater에 nickname 과 level 1을 넣어 주기
   // 그리고 다른 api 에서 users 로그찍어서 확인해보기
-
+  // 캐릭터 삭제, 조회
   // console.log(users);
-  //ㄴㅁㅇㄹ
+
   const user = users.find((user) => {
     return user.userUid === Number(userUid);
   });
@@ -30,6 +30,24 @@ router.post('/create', (request, response) => {
   //else안쓰는 이유 이미 다 걸러져서
   return response.json(character);
 });
+
+// 캐릭터 삭제 delete
+// path : '/delete'
+// userUid를 받아서 해당 userUid를 가진 유저의 캐릭터를 삭제
+
+router.delete('/delete', (request, response) => {
+  const { nickname, userUid } = request.body;
+  const user = users.find((user) => {
+    return user.userUid === Number(userUid);
+  });
+  if (nickname === user.nickname) {
+    return response(user, `${nickname}이 삭제되었습니다.`);
+  }
+});
+
+// 캐릭터 조회 get
+// path : '/status'
+// userUid를 받아서 해당 userUid를 가진 유저의 캐릭터 정보를 조회
 
 export default router;
 //
