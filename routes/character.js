@@ -37,18 +37,45 @@ router.post('/create', (request, response) => {
 
 router.delete('/delete', (request, response) => {
   const { nickname, userUid } = request.body;
+
   const user = users.find((user) => {
+    // console.log(user);
     return user.userUid === Number(userUid);
   });
-  if (nickname === user.nickname) {
-    return response(user, `${nickname}이 삭제되었습니다.`);
+  // console.log(user);
+  if (user.userUid === +userUid) {
+    // console.log(user);
+    return response.json({
+      message: `${nickname}이 삭제되었습니다.`,
+    });
   }
+  return response.json({
+    message: ' 불러오기 실패! ',
+  });
+
+  // return response(user, `${nickname}이 삭제가 실패 되었습니다.`);
 });
 
 // 캐릭터 조회 get
 // path : '/status'
 // userUid를 받아서 해당 userUid를 가진 유저의 캐릭터 정보를 조회
 
+router.get('/status', (request, response) => {
+  const { userUid } = request.body;
+  const userAccount = function (user) {
+    return user.userUid === userUid;
+  };
+  const userUidAccount = users.find(userAccount);
+  // console.log(user);
+  if (!userUidAccount) {
+    return response.json('유저를 찾지 못했습니다.');
+  }
+  //
+  else {
+    return response.json(users);
+  }
+});
+//users 내보내기
 export default router;
 //
 //[
