@@ -17,7 +17,8 @@ const router = express.Router();
 router.post('/signup', (request, response) => {
   const { id, password } = request.body; // { id: 'test', password: 'test' }
   const userUid = users.length + 1;
-  const createdUser = { id, password, userUid };
+  const character = '';
+  const createdUser = { id, password, userUid, character };
   users.push(createdUser);
   return response.json(createdUser);
 });
@@ -52,14 +53,26 @@ router.get('/account', (request, response) => {
   };
   const userAccount = users.find(account);
   // console.log(user);
-  if (userAccount) {
-    return response.json(`유저 ${id} 입니다`);
-  }
-  //
-  else {
+  if (!userAccount) {
     return response.json('유저를 찾지 못했습니다.');
   }
+  return response.json(userAccount);
 });
+
+//   const { id } = request.body; // { id: 'test', password: 'test' }
+//   const account = function (user) {
+//     return user.id === id;
+//   };
+//   const userAccount = users.find(account);
+//   // console.log(user);
+//   if (userAccount) {
+//     return response.json(`유저 ${id} 입니다`);
+//   }
+//   //
+//   else {
+//     return response.json('유저를 찾지 못했습니다.');
+//   }
+// });
 
 export const users = []; //users 내보내기
 export default router;
