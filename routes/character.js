@@ -76,9 +76,9 @@ router.delete('/delete', (request, response) => {
 router.get('/status', (request, response) => {
   const { nickname, userUid } = request.query;
   const user = users.find((user) => user.userUid === Number(userUid));
-  console.log(users);
+  // console.log(users);
   if (!user) {
-    console.log(user);
+    // console.log(user);
     return response.json('존재하지 않는 유저 입니다.');
   }
   const foundCharacter = user.characters.find(
