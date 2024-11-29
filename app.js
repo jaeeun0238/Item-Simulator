@@ -2,6 +2,7 @@
 //express 서버 3000포트 띄우기
 import routesAccount from './routes/account.js';
 import routesCharacter from './routes/character.js';
+import routesItem from './routes/item.js';
 import express from 'express'; // 모듈 불러오기
 
 const app = express(); // exoress()함수를 호출해서 app라는 객체생성
@@ -20,7 +21,7 @@ app.use(express.json());
 // app.use("/api", TodosRouter); // http://localhost:3000/
 
 // localhost:3000/api
-app.use('/api', [routesAccount, routesCharacter]); // http://localhost:3000/api
+app.use('/api', [routesAccount, routesCharacter, routesItem]); // http://localhost:3000/api
 
 // app.listen()메서드를 호출하여 서버를 시작 , 포트를 불러오고 클라이언트요청을 대기
 // 서버가 성공적으로 시작되면 메세지 출력
