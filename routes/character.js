@@ -24,12 +24,11 @@ router.post('/create', (request, response) => {
   if (!user) {
     return response.json('id 또는 password가 잘못입력되었습니다.');
   }
-
   let character = { nickname: nickname, level: 1 };
-  user.character = character;
+  user.characters.push(character);
 
   //else안쓰는 이유 이미 다 걸러져서
-  return response.json(character);
+  return response.json(user);
 });
 
 // 캐릭터 삭제 delete
@@ -48,10 +47,11 @@ router.delete('/delete', (request, response) => {
     return response.json('존재하지 않는 유저 입니다.');
   }
 
-  let removeCharacterNickname = user.character.nickname;
-  user.character = null;
+  user.characters = user.characters.filter(
+    (character) => character.nickname !== nickname,
+  );
   return response.json({
-    message: `${removeCharacterNickname}이 삭제되었습니다.`,
+    message: `${nickname}이 삭제되었습니다.`,
     users,
   });
 
@@ -74,19 +74,22 @@ router.delete('/delete', (request, response) => {
 // userUid를 받아서 해당 userUid를 가진 유저의 캐릭터 정보를 조회
 
 router.get('/status', (request, response) => {
-  const { nickname } = request.body;
-  const findUserAccount = function (user) {
-    return user.nickname === nickname;
-  };
-  const userAccount = users.find(findUserAccount);
+  const { nickname, userUid } = request.body;
+
+  const user = users.find((user) => user.userUid === userUid);
+  if (!user) {
+    return response.json('존재하지 않는 유저 입니다.');
+  }
+  const foundCharacter = user.characters.find(
+    (character) => character.nickname === nickname,
+  );
   // console.log(user);
-  if (!userAccount === nickname) {
-    return response.json('유저를 찾지 못했습니다.');
+  if (!foundCharacter) {
+    return response.json(`${nickname} 캐릭터를 찾지 못했습니다.`);
   }
   //
-  else {
-    return response.json(users);
-  }
+
+  return response.json(foundCharacter);
 });
 //users 내보내기
 export default router;
@@ -106,3 +109,9 @@ export default router;
 // obj.character = { nickname: '마법사', level: 1 };
 
 // console.log(obj.character); // { nickname: '마법사', level: 1 }
+
+// const arr = [1, 2, 3, 4, 5];
+
+// const result = arr.filter(function(item){
+//   return item!==3;
+// })

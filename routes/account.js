@@ -17,8 +17,8 @@ const router = express.Router();
 router.post('/signup', (request, response) => {
   const { id, password } = request.body; // { id: 'test', password: 'test' }
   const userUid = users.length + 1;
-  const character = '';
-  const createdUser = { id, password, userUid, character };
+  const characters = [];
+  const createdUser = { id, password, userUid, characters };
   users.push(createdUser);
   return response.json(createdUser);
 });
