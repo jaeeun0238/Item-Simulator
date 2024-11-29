@@ -84,7 +84,7 @@ router.get('/status', (request, response) => {
   const foundCharacter = user.characters.find(
     (character) => character.nickname === nickname,
   );
-  console.log(user);
+  // console.log(user);
   if (!foundCharacter) {
     return response.json(`${nickname} 캐릭터를 찾지 못했습니다.`);
   }
