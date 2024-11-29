@@ -74,16 +74,18 @@ router.delete('/delete', (request, response) => {
 // userUid를 받아서 해당 userUid를 가진 유저의 캐릭터 정보를 조회
 
 router.get('/status', (request, response) => {
-  const { nickname, userUid } = request.body;
+  const { nickname, userUid } = request.query;
 
   const user = users.find((user) => user.userUid === userUid);
+  console.log(user);
   if (!user) {
+    console.log(user);
     return response.json('존재하지 않는 유저 입니다.');
   }
   const foundCharacter = user.characters.find(
     (character) => character.nickname === nickname,
   );
-  // console.log(user);
+  console.log(user);
   if (!foundCharacter) {
     return response.json(`${nickname} 캐릭터를 찾지 못했습니다.`);
   }
