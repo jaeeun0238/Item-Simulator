@@ -10,8 +10,8 @@ const router = express.Router();
 const items = [];
 // const item = {item_code, item_name, item_stat, item_price};
 router.post('/makeItem', (request, response) => {
-  const { itemInfo } = request.body;
-  items.push({ itemInfo });
+  const { item_code, item_name, item_stat, item_price } = request.body;
+  items.push({ item_code, item_name, item_stat, item_price });
   return response.json({ items });
 });
 
@@ -28,10 +28,12 @@ router.put('/editItem', (request, response) => {
 });
 
 router.get('/itemCheck', (request, response) => {
-  const { item_code } = request.body;
+  const { item_code } = request.query;
   const item = items.find((item) => item.item_code === item_code);
-
-  if (!+item) {
+  // console.log('//////////////////////////////');
+  // console.log(item);
+  // console.log(+item);
+  if (!item) {
     return response.json('정보가 잘못 입력되었습니다.');
   }
   return response.json({ item });

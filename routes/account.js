@@ -47,7 +47,7 @@ router.post('/signin', function (request, response) {
 // users 배열에서 id가 일치하는지 확인
 // 일치하면 해당 id의 정보를 출력
 router.get('/account', (request, response) => {
-  const { id } = request.body; // { id: 'test', password: 'test' }
+  const { id } = request.query; // { id: 'test', password: 'test' }
   const account = function (user) {
     return user.id === id;
   };
